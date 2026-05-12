@@ -18,5 +18,5 @@ CREATE TABLE IF NOT EXISTS songs (
     valence REAL,
     tempo INTEGER,
     time_signature INTEGER,
-    release_date TEXT
+    meta_genre TEXT
 );
