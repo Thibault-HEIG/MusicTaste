@@ -9,3 +9,6 @@
 
 # Base de données (gardée en local)
 music_database.db
+
+# Instructions pour Gemini CLI
+gemini-cli

@@ -1,38 +1,49 @@
-This project is a pedagogical exploration conducted within the **Media Engineering** curriculum at **HEIG-VD**. It serves as a practical laboratory to bridge the gap between **artistic intuition** (musical "vibe") and **analytical rigor** (data science and engineering).
+# Music Recommendation Engine 🎵
 
----
+## 🎯 Goal
 
-## 🎓 Learning Objectives & Pedagogical Context
+This repository contains my first Machine Learning project. The primary objective is to learn and implement a complete data engineering lifecycle from raw data ingestion to feature engineering and dynamic model adjustment.
 
-The primary goal is not merely to build a functional recommender, but to master the underlying logic of data transformation and system architecture.
+## 🎧 Project Overview
 
-### 1. Bridging Intuition and Mathematics
+A content-based recommendation system designed to find and suggest similar musical tracks based on a single input song or a cluster of songs. The system calculates the mathematical distance between audio features to identify the closest match.
 
-The core challenge lies in translating subjective musical qualities into objective mathematical vectors. This involves understanding how features like "Energy" or "Valence" interact within an $N$-dimensional space to represent human emotion.
+## 💻 Tech Stack
 
-### 2. Architectural Integrity (The "Why")
+* **Language:** Python 3.x
+* **Data Manipulation & Engineering:** `pandas`
+* **Machine Learning:** `scikit-learn` (K-Nearest Neighbors)
+* **Database & Metadata Storage:** `sqlite3`
+* **Environment:** macOS / VS Code
 
-Before mastering the "how" of coding, this project prioritizes understanding the **structure** of a data pipeline.
+## ⚙️ Data Pipeline
 
-* **Data Decoupling**: Learning to separate human-readable metadata (SQLite) from machine-executable features (Vecteurs) to ensure system scalability.
-* **Normalization Ethics**: Recognizing how mathematical bias (scaling differences) can unintentionally silence specific musical traits.
+The system operates on a linear pipeline, separated into modular scripts to ensure data integrity:
 
-### 3. Iterative Problem Solving
+1. **Get Data:** Ingestion of raw Spotify audio features and metadata.
+2. **Clean Data (`01-cleaning.py`):** * Normalization of continuous variables.
+* Categorical mapping (reducing hundreds of genres into 15).
+* Handling missing values and ensuring type consistency.
 
-Guided by the values of **self-questioning** and **perseverance**, the project utilizes an iterative approach. Every technical choice—such as using One-Hot Encoding for time signatures—is a result of challenging default assumptions and seeking the most logical representation of reality.
 
----
+3. **Prepare for Machine (`02-cleaning.py`):**
+* **Min-Max Scaling:** Applied to continuous numerical features to prevent magnitude bias in distance calculations.
+* **One-Hot Encoding:** Applied to distinct categorical variables to prevent false mathematical proximity.
+* **Feature Isolation:** Stripping all string/text metadata to export a pure, mathematical matrix (`dataset_for_machine.csv`).
 
-## 🧭 Project Philosophy
 
-> "I want to understand why things work before fully mastering how to write them."
+4. **Apply Weights Matrix:** Processing the feature matrix through a K-Nearest Neighbors (KNN) algorithm to calculate Euclidean distances between tracks.
+5. **Adjust Matrix with User Feedback (Dynamic Loop):** Implementing a reinforcement layer where user interactions (likes/skips) penalize or boost specific feature weights.
 
-This project rejects abstract exercises in favor of a **real-world goal**: transmitting emotion through creative media engineering. It reflects the transition from a beginner programmer to a competent engineer capable of handling complex, fragmented data with a clean, integrated workflow.
+## 🗄️ Data Architecture & Storage
 
----
+* **The Storage Layer (`03-database.py`):** the cleaned dataset is stripped from the dataset and stored in a relational **SQLite** database.
+* **The Bridge:** The unique `track_id` serves as the `PRIMARY KEY`. Once the algorithm identifies the closest numerical vector, the system queries the SQLite database via the `track_id` to retrieve the readable track information.
 
-## 🛠 Technical Environment
+## 🚧 Current Status & Next Steps
 
-* **Context**: First-year Media Engineering student project.
-* **Workflow**: Developed on **macOS** (MacBook Pro) utilizing **VS Code** and **Warp**, favoring integrated toolchains over fragmented setups.
-* **Stack**: Python (Pandas), SQLite, and future implementation of Scikit-Learn.
+* [x] Data Cleaning & Mapping
+* [x] Feature Normalization & Encoding
+* [x] SQLite Schema Design & Data Migration
+* [ ] Implementation of KNN Recommender Script
+* [ ] Development of the Dynamic Weighting Matrix based on synthetic feedback loops
