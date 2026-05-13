@@ -1,3 +1,5 @@
 SELECT * FROM songs
 ORDER BY popularity DESC
-LIMIT 5;
+LIMIT 10;
+
+SELECT COUNT(*) FROM songs;

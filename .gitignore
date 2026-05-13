@@ -1,4 +1,11 @@
+# Fichiers mac
 .DS_Store
+
+# Environnement Python
 .venv
+
+# Config VS Code
 .vscode
-.db
+
+# Base de données (gardée en local)
+music_database.db
