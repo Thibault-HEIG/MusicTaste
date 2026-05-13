@@ -24,6 +24,9 @@ df = pd.get_dummies(df, columns=['meta_genre', 'time_signature'], prefix=['genre
 cols_numeriques = df.select_dtypes(include=['number']).columns.tolist()
 df = df[['track_id'] + cols_numeriques]
 
+# Supprimer la colonne tonalité qui ne donne aucune indication sur le style / vibe
+df.drop(columns=["key"], inplace=True)
+
 # On créé une copie du CSV pour l'algorithme
 df.to_csv('dataset_for_machine.csv', index=False)
 print("Le CSV est prêt à être utilisé pour l'algorithme : dataset_for_machine.csv")
