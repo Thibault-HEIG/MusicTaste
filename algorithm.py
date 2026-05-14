@@ -1,12 +1,13 @@
 import pandas as pd
 import sqlite3
 import json
+import sys
 
 # Le dataset_for_machine.csv est ma nouvelle base
 df = pd.read_csv('data/dataset_for_machine.csv')
 
-# Chansons de référence pour l'algorithme
-seed_tracks = ['5XeFesFbtLpXzIVDNQP22n', '0BxE4FqsDD1Ot4YuBXwAPp', '2HZLXBOnaSRhXStMLrq9fD']
+# Prenant les track_id donné au lancement du script (python3 04-recommand.py id1 id2 id3 id4 etc...)
+seed_tracks = sys.argv[1:]
 
 # Extraire les lignes de la Seed Playlist
 seedRows = df[df['track_id'].isin(seed_tracks)]
