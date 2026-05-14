@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Le dataset_cleaned.csv est ma nouvelle base
-df = pd.read_csv('dataset_cleaned.csv')
+df = pd.read_csv('data/dataset_cleaned.csv')
 
 # Mapping min-max
 def mappingMinMax(column):
@@ -18,17 +18,20 @@ for col in columnsToMap:
 df["explicit"] = df["explicit"].astype(int)
 
 # Création des colonnes binaires pour les genres et time_signatures
-df = pd.get_dummies(df, columns=['meta_genre', 'time_signature'], prefix=['genre', 'ts'])
-
-# Sélectionner uniquement les colonnes numériques + l'ID
-cols_numeriques = df.select_dtypes(include=['number']).columns.tolist()
-df = df[['track_id'] + cols_numeriques]
+df = pd.get_dummies(df, columns=['meta_genre', 'time_signature'], prefix=['genre', 'ts'], dtype=int)
 
 # Supprimer la colonne tonalité qui ne donne aucune indication sur le style / vibe
-df.drop(columns=["key"], inplace=True)
+df.drop(columns=["key"], inplace=True, errors='ignore')
+
+# Sélectionner uniquement les colonnes numériques, booléennes + l'ID
+cols_numeriques = df.select_dtypes(include=['number', 'bool']).columns.tolist()
+df = df[['track_id'] + cols_numeriques]
+
+# Afficher toutes les colonnes présentes avant l'export
+print(df.columns.tolist())
 
 # On créé une copie du CSV pour l'algorithme
-df.to_csv('dataset_for_machine.csv', index=False)
-print("Le CSV est prêt à être utilisé pour l'algorithme : dataset_for_machine.csv")
+df.to_csv('data/dataset_for_machine.csv', index=False)
+print("Le CSV est prêt à être utilisé pour l'algorithme : data/dataset_for_machine.csv")
 
 print("Les données ont été normalisées et transformées en nombres.")

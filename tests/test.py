@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv('dataset_cleaned.csv')
+df = pd.read_csv('data/dataset_cleaned.csv')
 
 # Filtrer et afficher les lignes où 'artists' OU 'track_name' est vide (NaN)
 lignes_problematiques = df[df['artists'].isna() | df['track_name'].isna()]

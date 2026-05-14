@@ -21,15 +21,15 @@ A content-based recommendation system designed to find and suggest similar music
 The system operates on a linear pipeline, separated into modular scripts to ensure data integrity:
 
 1. **Get Data:** Ingestion of raw Spotify audio features and metadata.
-2. **Clean Data (`01-cleaning.py`):** * Normalization of continuous variables.
+2. **Clean Data (`scripts/01-cleaning.py`):** * Normalization of continuous variables.
 * Categorical mapping (reducing hundreds of genres into 15).
 * Handling missing values and ensuring type consistency.
 
 
-3. **Prepare for Machine (`02-cleaning.py`):**
+3. **Prepare for Machine (`scripts/02-cleaning.py`):**
 * **Min-Max Scaling:** Applied to continuous numerical features to prevent magnitude bias in distance calculations.
 * **One-Hot Encoding:** Applied to distinct categorical variables to prevent false mathematical proximity.
-* **Feature Isolation:** Stripping all string/text metadata to export a pure, mathematical matrix (`dataset_for_machine.csv`).
+* **Feature Isolation:** Stripping all string/text metadata to export a pure, mathematical matrix (`data/dataset_for_machine.csv`).
 
 
 4. **Apply Weights Matrix:** Processing the feature matrix through a K-Nearest Neighbors (KNN) algorithm to calculate Euclidean distances between tracks.
@@ -37,7 +37,7 @@ The system operates on a linear pipeline, separated into modular scripts to ensu
 
 ## 🗄️ Data Architecture & Storage
 
-* **The Storage Layer (`03-database.py`):** the cleaned dataset is stripped from the dataset and stored in a relational **SQLite** database.
+* **The Storage Layer (`scripts/03-database.py`):** the cleaned dataset is stripped from the dataset and stored in a relational **SQLite** database.
 * **The Bridge:** The unique `track_id` serves as the `PRIMARY KEY`. Once the algorithm identifies the closest numerical vector, the system queries the SQLite database via the `track_id` to retrieve the readable track information.
 
 ## 🚧 Current Status & Next Steps

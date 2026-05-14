@@ -1,5 +1,0 @@
-SELECT * FROM songs
-ORDER BY popularity DESC
-LIMIT 10;
-
-SELECT COUNT(*) FROM songs;

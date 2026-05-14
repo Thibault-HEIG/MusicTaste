@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Importer le CSV comme Data Frame (df)
-df = pd.read_csv('dataset.csv')
+df = pd.read_csv('data/dataset.csv')
 
 # Normalisation du score de popularité
 if df["popularity"].max() > 1:
@@ -46,8 +46,9 @@ genre_mapping = {
 # On applique le mapping
 df["meta_genre"] = df["track_genre"].map(genre_mapping)
 
-# On remplit les trous (NaN) par "Other"
+# On remplit les trous (NaN) par "Other" et on jette les doublons
 df["meta_genre"] = df["meta_genre"].fillna("Other")
+df.drop_duplicates(subset=['track_id'], inplace=True)
 
 # Supprimer l'ancienne colonne de genre ('inplace' pour remplacer)
 df.drop(columns=["track_genre"], inplace=True)
@@ -55,7 +56,7 @@ df.drop(columns=["track_genre"], inplace=True)
 df.drop(columns=["Unnamed: 0"], inplace=True)
 
 # On créé une copie du CSV pour le script 02
-df.to_csv('dataset_cleaned.csv', index=False)
-print("Une copie du CSV a été créée : dataset_cleaned.csv")
+df.to_csv('data/dataset_cleaned.csv', index=False)
+print("Une copie du CSV a été créée : data/dataset_cleaned.csv")
 
 print("Le score de popularité et le remapping des genres ont été appliqués.")
