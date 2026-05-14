@@ -8,7 +8,10 @@
 .vscode
 
 # Base de données (gardée en local)
-music_database.db
+data/music_database.db
+
+# Dataset original
+data-backup
 
 # Instructions pour Gemini CLI
 gemini-cli

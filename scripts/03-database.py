@@ -4,11 +4,11 @@ import os
 
 def initialize_database():
     # 1. Chargement des données métier
-    if not os.path.exists('dataset_cleaned.csv'):
-        print("Erreur : dataset_cleaned.csv non trouvé. Lancez 01-cleaning.py d'abord.")
+    if not os.path.exists('data/dataset_cleaned.csv'):
+        print("Erreur : data/dataset_cleaned.csv non trouvé. Lancez 01-cleaning.py d'abord.")
         return
     
-    df = pd.read_csv('dataset_cleaned.csv')
+    df = pd.read_csv('data/dataset_cleaned.csv')
     
     # Nettoyage préventif des doublons pour respecter la Clé Primaire SQL
     initial_count = len(df)
@@ -20,7 +20,7 @@ def initialize_database():
     df.dropna(subset=['artists', 'track_name'], inplace=True)
 
     # 2. Connexion à SQLite
-    conn = sqlite3.connect('music_database.db')
+    conn = sqlite3.connect('data/music_database.db')
     cursor = conn.cursor()
 
     # 3. Lecture et exécution du fichier .sql
